@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="러쉬스튜디오 — 당신의 브랜드를 영상으로 설득합니다. 광고, 브랜드 필름, 패션 필름, 숏폼 제작 전문">
+<meta property="og:title" content="RUSH STUDIO — 비주얼텔링 영상 제작">
+<meta property="og:description" content="당신의 브랜드를 영상으로 설득합니다.">
+<meta property="og:image" content="https://rushstudio.kr/og-image.jpg">
+<meta property="og:url" content="https://rushstudio.kr">
+<title>RUSH STUDIO — 당신의 브랜드를 영상으로 설득합니다</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080e18;
+  --navy: #0d1b2a;
+  --blue: #3582d4;
+  --blue-dim: #1b3d66;
+  --white: #f0f4f8;
+  --gray: #8fa8c2;
+  --dim: #3a5068;
+  --card: #111d2b;
+  --kakao: #FEE500;
+  --kakao-text: #191919;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+.cursor {
+  position: fixed; width: 8px; height: 8px;
+  background: var(--blue); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  position: fixed; width: 36px; height: 36px;
+  border: 1px solid rgba(53,130,212,0.4); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transition: transform 0.18s ease, width 0.2s, height 0.2s;
+  transform: translate(-50%, -50%);
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 1000; opacity: 0.6;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 500; padding: 28px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: background 0.3s, padding 0.3s;
+}
+nav.scrolled { background: rgba(8,14,24,0.97); padding: 18px 60px; }
+nav::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(8,14,24,0.9) 0%, transparent 100%);
+  pointer-events: none;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+  letter-spacing: 0.15em; color: var(--white); text-decoration: none; position: relative; z-index: 1;
+}
+.nav-links { display: flex; gap: 40px; list-style: none; position: relative; z-index: 1; }
+.nav-links a {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gray); text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-right { display: flex; gap: 12px; align-items: center; position: relative; z-index: 1; }
+.nav-kakao {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--kakao); color: var(--kakao-text);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 8px 16px; text-decoration: none; border-radius: 2px;
+  transition: opacity 0.2s;
+}
+.nav-kakao:hover { opacity: 0.88; }
+.nav-kakao svg { width: 16px; height: 16px; }
+.nav-cta {
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--blue); text-decoration: none;
+  border: 1px solid var(--blue-dim); padding: 9px 22px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-cta:hover { background: var(--blue); color: var(--black); }
+
+/* MOBILE NAV */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: none; position: relative; z-index: 1; background: none; border: none; padding: 4px;
+}
+.hamburger span { display: block; width: 24px; height: 1px; background: var(--white); transition: all 0.3s; }
+.mobile-menu {
+  display: none; position: fixed; inset: 0; background: var(--black);
+  z-index: 400; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Bebas Neue', sans-serif; font-size: 40px; letter-spacing: 0.08em;
+  color: var(--white); text-decoration: none; transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--blue); }
+
+/* HERO */
+.hero {
+  height: 100vh; display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 0 60px 80px; position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(21,52,90,0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 40% at 20% 80%, rgba(53,130,212,0.08) 0%, transparent 60%);
+}
+.hero-line-v {
+  position: absolute; top: 0; right: 200px; width: 1px; height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(53,130,212,0.15) 40%, rgba(53,130,212,0.15) 60%, transparent 100%);
+}
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue);
+  margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(80px, 13vw, 180px);
+  line-height: 0.88; letter-spacing: 0.02em; color: var(--white);
+  opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+}
+.hero-title .accent { color: var(--blue); }
+.hero-sub {
+  margin-top: 36px; font-size: 14px; line-height: 1.8; color: var(--gray);
+  max-width: 420px; opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+}
+.hero-actions {
+  display: flex; gap: 14px; margin-top: 40px;
+  opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+}
+.hero-btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--blue); color: var(--black);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 14px 28px; text-decoration: none; transition: background 0.2s;
+}
+.hero-btn-primary:hover { background: #5aa0e8; }
+.hero-btn-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--kakao); color: var(--kakao-text);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 14px 24px; text-decoration: none; transition: opacity 0.2s;
+}
+.hero-btn-secondary:hover { opacity: 0.88; }
+.hero-btn-secondary svg { width: 16px; height: 16px; }
+.hero-scroll {
+  position: absolute; bottom: 40px; right: 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  opacity: 0; animation: fadeIn 1s 1.2s forwards;
+}
+.hero-scroll span {
+  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--dim); writing-mode: vertical-rl;
+}
+.scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--blue), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes scrollPulse {
+  0%,100% { opacity:0.3; transform:scaleY(1); }
+  50% { opacity:1; transform:scaleY(1.1); }
+}
+
+/* SECTIONS */
+section { padding: 140px 60px; position: relative; }
+.section-tag {
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 20px; display: flex; align-items: center; gap: 14px;
+}
+.section-tag::before { content: ''; width: 30px; height: 1px; background: var(--blue); }
+.section-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: 0.04em; line-height: 1.1; color: var(--white);
+}
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 60px; align-items: start; }
+.about-text p { font-size: 15px; line-height: 1.95; color: var(--gray); margin-bottom: 16px; }
+.about-text p strong { color: var(--white); font-weight: 500; }
+.about-clients-label {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dim); margin-bottom: 20px; margin-top: 48px;
+}
+.client-logos { display: flex; flex-wrap: wrap; gap: 10px; }
+.client-logo {
+  border: 1px solid var(--blue-dim); padding: 8px 18px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--gray);
+  transition: border-color 0.2s, color 0.2s;
+}
+.client-logo:hover { border-color: var(--blue); color: var(--white); }
+.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.stat-box {
+  background: var(--card); padding: 36px 32px;
+  border: 1px solid rgba(53,130,212,0.08); transition: border-color 0.3s;
+}
+.stat-box:hover { border-color: rgba(53,130,212,0.3); }
+.stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 52px; letter-spacing: 0.05em; color: var(--white); line-height: 1; margin-bottom: 8px; }
+.stat-num span { color: var(--blue); }
+.stat-label { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
+
+/* PROMISE */
+.promise-section { background: var(--navy); }
+.promise-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 60px; }
+.promise-card {
+  background: var(--card); padding: 52px 40px;
+  border-top: 2px solid transparent; transition: border-color 0.3s, transform 0.3s; position: relative; overflow: hidden;
+}
+.promise-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(53,130,212,0.06) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.promise-card:hover { border-color: var(--blue); transform: translateY(-4px); }
+.promise-card:hover::before { opacity: 1; }
+.promise-num { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 0.2em; color: var(--blue-dim); margin-bottom: 32px; }
+.promise-icon-wrap {
+  width: 52px; height: 52px; border: 1px solid var(--blue-dim);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 28px; transition: border-color 0.3s, background 0.3s;
+}
+.promise-card:hover .promise-icon-wrap { border-color: var(--blue); background: rgba(53,130,212,0.1); }
+.promise-icon-wrap svg { width: 22px; height: 22px; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.promise-kw { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.06em; color: var(--white); margin-bottom: 8px; }
+.promise-subtitle { font-size: 11px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+.promise-desc { font-size: 13px; line-height: 1.85; color: var(--gray); }
+
+/* PORTFOLIO */
+.portfolio-filter { display: flex; gap: 4px; margin: 48px 0 40px; flex-wrap: wrap; }
+.filter-btn {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--dim); border: 1px solid var(--blue-dim); background: none;
+  padding: 8px 20px; cursor: none; transition: all 0.2s; font-family: 'Noto Sans KR', sans-serif;
+}
+.filter-btn.active, .filter-btn:hover { background: var(--blue); color: var(--black); border-color: var(--blue); }
+
+.portfolio-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 3px; }
+.pf-card {
+  position: relative; overflow: hidden; cursor: none; background: var(--card);
+  transition: transform 0.3s;
+}
+.pf-card:hover { transform: scale(1.02); z-index: 2; }
+.pf-thumb {
+  width: 100%; aspect-ratio: 16/10; display: block; object-fit: cover;
+  background: var(--card);
+}
+.pf-video-wrap {
+  position: relative; width: 100%; aspect-ratio: 16/11; overflow: hidden; cursor: none;
+}
+.pf-video-wrap .yt-thumb {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.4s ease, filter 0.3s ease;
+  filter: brightness(0.35);
+}
+.pf-card:hover .yt-thumb { transform: scale(1.04); filter: brightness(0.55); }
+.play-btn {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.8);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, background 0.2s; cursor: none; z-index: 2; pointer-events: none;
+}
+.pf-card:hover .play-btn { transform: translate(-50%,-50%) scale(1.12); background: var(--blue); border-color: var(--blue); }
+.play-btn svg { width: 18px; height: 18px; fill: white; margin-left: 4px; }
+.video-modal {
+  display: none; position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,0.94); align-items: center; justify-content: center;
+}
+.video-modal.open { display: flex; }
+.modal-inner { position: relative; width: 90vw; max-width: 1000px; aspect-ratio: 16/9; }
+.modal-inner iframe { width: 100%; height: 100%; border: none; }
+.modal-close {
+  position: absolute; top: -44px; right: 0;
+  background: none; border: none; color: var(--gray);
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: none; display: flex; align-items: center; gap: 8px; transition: color 0.2s;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.modal-close:hover { color: var(--white); }
+.modal-close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
+.pf-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  padding: 12px 14px; pointer-events: none;
+}
+.pf-cat {
+  font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #7ab8f5; margin-bottom: 4px;
+}
+.pf-name {
+  font-size: 13px; font-weight: 700; color: #ffffff;
+  line-height: 1.35; word-break: keep-all;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+}
+.pf-border {
+  position: absolute; inset: 0; border: 1px solid transparent;
+  transition: border-color 0.3s; pointer-events: none;
+}
+.pf-card:hover .pf-border { border-color: rgba(53,130,212,0.4); }
+
+/* YouTube CTA */
+.yt-cta {
+  text-align: center; margin-top: 48px;
+}
+.yt-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid var(--blue-dim); color: var(--gray);
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 14px 32px; text-decoration: none; transition: all 0.2s;
+}
+.yt-btn:hover { border-color: var(--blue); color: var(--white); background: rgba(53,130,212,0.08); }
+.yt-btn svg { width: 18px; height: 18px; fill: #FF0000; }
+
+/* INSTAGRAM */
+.insta-section { background: var(--navy); }
+.insta-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 48px; }
+.insta-placeholder {
+  aspect-ratio: 1; background: var(--card);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  border: 1px solid rgba(53,130,212,0.08); transition: border-color 0.3s;
+  text-decoration: none;
+}
+.insta-placeholder:hover { border-color: rgba(53,130,212,0.3); }
+.insta-placeholder svg { width: 32px; height: 32px; opacity: 0.3; }
+.insta-placeholder span { font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
+.insta-cta {
+  margin-top: 32px; display: flex; align-items: center; gap: 16px;
+}
+.insta-follow {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+  padding: 12px 24px; text-decoration: none; border-radius: 2px; transition: opacity 0.2s;
+}
+.insta-follow:hover { opacity: 0.88; }
+.insta-follow svg { width: 16px; height: 16px; fill: white; }
+.insta-handle { font-size: 12px; color: var(--dim); }
+
+/* CONTACT */
+.contact-section { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+.contact-big {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(48px, 8vw, 110px);
+  letter-spacing: 0.03em; line-height: 0.9; color: var(--white); margin: 20px 0 56px;
+}
+.contact-big .accent { color: var(--blue); }
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+/* FORM */
+.contact-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); }
+.form-group input, .form-group textarea, .form-group select {
+  background: var(--card); border: 1px solid rgba(53,130,212,0.15);
+  color: var(--white); font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
+  padding: 14px 16px; outline: none; transition: border-color 0.2s;
+  -webkit-appearance: none; appearance: none;
+}
+.form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238fa8c2' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: none; }
+.form-group option { background: var(--navy); }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--blue); }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--dim); }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-submit {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--blue); color: var(--black);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: none; padding: 16px 36px; cursor: none; transition: background 0.2s; width: fit-content;
+}
+.form-submit:hover { background: #5aa0e8; }
+.form-submit svg { width: 14px; height: 14px; fill: none; stroke: var(--black); stroke-width: 2; stroke-linecap: round; }
+.form-notice { font-size: 11px; color: var(--dim); line-height: 1.6; margin-top: 4px; }
+.form-success {
+  display: none; background: rgba(53,130,212,0.1); border: 1px solid var(--blue);
+  padding: 20px 24px; font-size: 13px; color: var(--white); line-height: 1.6;
+}
+.form-success.show { display: block; }
+
+/* Contact info */
+.contact-info-col { display: flex; flex-direction: column; gap: 40px; }
+.contact-item-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); margin-bottom: 10px; }
+.contact-item-val { font-size: 14px; color: var(--gray); line-height: 1.8; }
+.contact-item-val a { color: var(--blue); text-decoration: none; }
+.contact-item-val a:hover { text-decoration: underline; }
+.contact-divider { width: 100%; height: 1px; background: rgba(53,130,212,0.1); }
+.kakao-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--kakao); color: var(--kakao-text);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 14px 28px; text-decoration: none; border-radius: 2px; transition: opacity 0.2s;
+}
+.kakao-btn:hover { opacity: 0.88; }
+.kakao-btn svg { width: 18px; height: 18px; }
+
+/* FOOTER */
+footer {
+  padding: 40px 60px; border-top: 1px solid rgba(255,255,255,0.05);
+  display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+}
+.f-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.14em; color: var(--dim); }
+.f-tagline { font-size: 11px; color: var(--dim); margin-top: 6px; }
+.f-links { display: flex; gap: 24px; align-items: center; }
+.f-links a { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); text-decoration: none; transition: color 0.2s; }
+.f-links a:hover { color: var(--white); }
+.f-copy { font-size: 10px; color: var(--dim); margin-top: 8px; text-align: right; }
+
+/* FLOATING KAKAO */
+.float-kakao {
+  position: fixed; bottom: 32px; right: 32px; z-index: 300;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+}
+.float-kakao-btn {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--kakao); display: flex; align-items: center; justify-content: center;
+  text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.float-kakao-btn:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(0,0,0,0.5); }
+.float-kakao-btn svg { width: 24px; height: 24px; }
+.float-kakao-label {
+  background: var(--navy); color: var(--gray); font-size: 10px; letter-spacing: 0.08em;
+  padding: 6px 12px; opacity: 0; transform: translateX(10px);
+  transition: opacity 0.2s, transform 0.2s; pointer-events: none; white-space: nowrap;
+}
+.float-kakao:hover .float-kakao-label { opacity: 1; transform: none; }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  nav.scrolled { padding: 14px 24px; }
+  .nav-links, .nav-cta, .nav-kakao { display: none; }
+  .hamburger { display: flex; }
+  section { padding: 80px 24px; }
+  .hero { padding: 0 24px 60px; }
+  .hero-title { font-size: clamp(64px, 16vw, 100px); }
+  .hero-actions { flex-direction: column; }
+  .about-grid, .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+  .promise-grid { grid-template-columns: 1fr; }
+  .portfolio-grid { grid-template-columns: repeat(3,1fr); }
+  .insta-grid { grid-template-columns: repeat(2,1fr); }
+  .form-row { grid-template-columns: 1fr; }
+  footer { grid-template-columns: 1fr; }
+  .f-copy { text-align: left; }
+  .float-kakao { bottom: 20px; right: 20px; }
+  body { cursor: auto; }
+  .cursor, .cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- FLOATING KAKAO -->
+<div class="float-kakao">
+  <div class="float-kakao-label">카카오톡 문의</div>
+  <a href="http://pf.kakao.com/_bxmzCX" target="_blank" class="float-kakao-btn" aria-label="카카오톡 채널 문의">
+    <svg viewBox="0 0 24 24" fill="var(--kakao-text)">
+      <path d="M12 3C6.48 3 2 6.69 2 11.25c0 2.91 1.77 5.47 4.45 6.99L5.5 21l3.6-1.94c.94.26 1.93.4 2.9.4 5.52 0 10-3.69 10-8.21S17.52 3 12 3z"/>
+    </svg>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">RUSH STUDIO</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#promise">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="http://pf.kakao.com/_bxmzCX" target="_blank" class="nav-kakao">
+      <svg viewBox="0 0 24 24" fill="var(--kakao-text)"><path d="M12 3C6.48 3 2 6.69 2 11.25c0 2.91 1.77 5.47 4.45 6.99L5.5 21l3.6-1.94c.94.26 1.93.4 2.9.4 5.52 0 10-3.69 10-8.21S17.52 3 12 3z"/></svg>
+      카카오 문의
+    </a>
+    <a href="#contact" class="nav-cta">문의하기</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#promise" onclick="closeMobile()">Services</a>
+  <a href="#portfolio" onclick="closeMobile()">Portfolio</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="http://pf.kakao.com/_bxmzCX" target="_blank">카카오 문의</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line-v"></div>
+  <div class="hero-eyebrow">Visual Storytelling Studio · Since 2019</div>
+  <h1 class="hero-title">RUSH<br><span class="accent">STUDIO</span></h1>
+  <p class="hero-sub">당신의 브랜드를 <strong>[ 영상 ]으로</strong> 설득합니다.<br>광고, 브랜드 필름, 패션 필름, 숏폼까지 — 메인 감독이 직접 디렉팅합니다.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="hero-btn-primary">
+      프로젝트 문의
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="http://pf.kakao.com/_bxmzCX" target="_blank" class="hero-btn-secondary">
+      <svg viewBox="0 0 24 24"><path d="M12 3C6.48 3 2 6.69 2 11.25c0 2.91 1.77 5.47 4.45 6.99L5.5 21l3.6-1.94c.94.26 1.93.4 2.9.4 5.52 0 10-3.69 10-8.21S17.52 3 12 3z"/></svg>
+      카카오톡 상담
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-tag">About Us</div>
+  <h2 class="section-title reveal">비주얼텔링 중심<br>영상 제작 스튜디오</h2>
+  <div class="about-grid">
+    <div class="about-text reveal reveal-delay-1">
+      <p>러쉬스튜디오는 <strong>브랜드의 가치를 가장 매력적으로 전달하는</strong> 비주얼텔링 중심 영상 제작사입니다.</p>
+      <p>메인 감독이 직접 모든 프로젝트를 디렉팅하며, 광고, 브랜드 필름, 패션 필름, 행사 스케치까지 — 우리는 영화 같은 감각과 남다른 비주얼로 시선을 사로잡는 결과물을 만듭니다.</p>
+      <div class="about-clients-label">함께한 클라이언트</div>
+      <div class="client-logos">
+        <div class="client-logo">LOEWE</div>
+        <div class="client-logo">kakao</div>
+        <div class="client-logo">ZARA</div>
+        <div class="client-logo">MLB</div>
+        <div class="client-logo">MONCLER</div>
+        <div class="client-logo">LACOSTE</div>
+        <div class="client-logo">HOYOVERSE</div>
+        <div class="client-logo">BLISSOO</div>
+        <div class="client-logo">MASSIMO DUTTI</div>
+      </div>
+    </div>
+    <div class="about-stats reveal reveal-delay-2">
+      <div class="stat-box"><div class="stat-num">7<span>+</span></div><div class="stat-label">Years of Experience</div></div>
+      <div class="stat-box"><div class="stat-num">100<span>+</span></div><div class="stat-label">Projects Completed</div></div>
+      <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">Service Categories</div></div>
+      <div class="stat-box"><div class="stat-num"><span>∞</span></div><div class="stat-label">Unlimited Revisions</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section id="promise" class="promise-section">
+  <div class="section-tag">Brand Promise</div>
+  <h2 class="section-title reveal">우리가 약속하는<br>세 가지</h2>
+  <div class="promise-grid">
+    <div class="promise-card reveal reveal-delay-1">
+      <div class="promise-num">01</div>
+      <div class="promise-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <div class="promise-kw">"SPEED"</div>
+      <div class="promise-subtitle">빠른 납기</div>
+      <p class="promise-desc">빠르고 정교한 편집으로, 원하는 영상을 신속하게 완성해 드립니다. 효율적인 프로세스로 짧은 기간 안에 완성도 높은 결과물을 제공합니다.</p>
+    </div>
+    <div class="promise-card reveal reveal-delay-2">
+      <div class="promise-num">02</div>
+      <div class="promise-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M18.6 6.62c-1.44 0-2.8.56-3.77 1.53L12 10.66 10.48 12h.01L7.8 14.39c-.64.64-1.49.99-2.4.99-1.87 0-3.39-1.51-3.39-3.38S3.53 8.62 5.4 8.62c.91 0 1.76.35 2.44 1.03l1.13 1 1.51-1.34L9.22 8.2C8.2 7.18 6.84 6.62 5.4 6.62 2.42 6.62 0 9.04 0 12s2.42 5.38 5.4 5.38c1.44 0 2.8-.56 3.77-1.53l2.83-2.5.01.01L13.52 12h-.01l2.69-2.39c.64-.64 1.49-.99 2.4-.99 1.87 0 3.39 1.51 3.39 3.38s-1.52 3.38-3.39 3.38c-.9 0-1.76-.35-2.44-1.03l-1.14-1.01-1.51 1.34 1.27 1.12c1.02 1.01 2.37 1.57 3.82 1.57 2.98 0 5.4-2.41 5.4-5.38s-2.42-5.38-5.4-5.38z"/></svg>
+      </div>
+      <div class="promise-kw">"UNLIMITED"</div>
+      <div class="promise-subtitle">무제한 수정</div>
+      <p class="promise-desc">클라이언트가 만족할 때까지, 원하는 방향으로 무제한 수정이 가능합니다. 아이디어 조정부터 세부 디테일까지 끝까지 함께합니다.</p>
+    </div>
+    <div class="promise-card reveal reveal-delay-3">
+      <div class="promise-num">03</div>
+      <div class="promise-icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="promise-kw">"TOTAL SOLUTION"</div>
+      <div class="promise-subtitle">원스톱 서비스</div>
+      <p class="promise-desc">복잡한 외주 과정 없이, 처음 상담부터 최종 납품까지 한 흐름으로 진행되는 효율적이고 안정적인 원스톱 제작 서비스를 제공합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-tag">Portfolio</div>
+  <h2 class="section-title reveal">주요 작업물</h2>
+  <div class="portfolio-filter">
+    <button class="filter-btn active" onclick="filterPF('all',this)">All</button>
+    <button class="filter-btn" onclick="filterPF('brand',this)">Brand</button>
+    <button class="filter-btn" onclick="filterPF('fashion',this)">Fashion</button>
+    <button class="filter-btn" onclick="filterPF('event',this)">Event</button>
+    <button class="filter-btn" onclick="filterPF('short',this)">Short</button>
+    <button class="filter-btn" onclick="filterPF('mv',this)">M/V</button>
+  </div>
+  <div class="portfolio-grid" id="pfGrid">
+
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="T9s8MSsO6dk" onclick="openModal('T9s8MSsO6dk')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/T9s8MSsO6dk/hqdefault.jpg" alt="마시모두띠 IFC몰" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">마시모두띠 IFC몰</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="702PQNP3mc0" onclick="openModal('702PQNP3mc0')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/702PQNP3mc0/hqdefault.jpg" alt="DDP Showroom" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">DDP Showroom</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="fM_JHL031VA" onclick="openModal('fM_JHL031VA')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/fM_JHL031VA/hqdefault.jpg" alt="호요버스 원신" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">호요버스 원신</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="852c9fIWGzU" onclick="openModal('852c9fIWGzU')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/852c9fIWGzU/hqdefault.jpg" alt="바니스뉴욕 뷰티" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">바니스뉴욕 뷰티</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="V37MU1wxWy0" onclick="openModal('V37MU1wxWy0')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/V37MU1wxWy0/hqdefault.jpg" alt="한우 오마카세 우이시" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">한우 오마카세 우이시</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="AIc6CSKbzX8" onclick="openModal('AIc6CSKbzX8')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/AIc6CSKbzX8/hqdefault.jpg" alt="태권크리" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">태권크리</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="cVYdhCFGpOw" onclick="openModal('cVYdhCFGpOw')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/cVYdhCFGpOw/hqdefault.jpg" alt="통합사회 김종웅" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">통합사회 김종웅</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="O-U81zeejUQ" onclick="openModal('O-U81zeejUQ')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/O-U81zeejUQ/hqdefault.jpg" alt="크로스핏 까사" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">크로스핏 까사</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="wTDlNwdkeZ0" onclick="openModal('wTDlNwdkeZ0')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/wTDlNwdkeZ0/hqdefault.jpg" alt="서진바다" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">서진바다</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="1o6tQACegNs" onclick="openModal('1o6tQACegNs')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/1o6tQACegNs/hqdefault.jpg" alt="팀보타" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">팀보타</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="oUfEBHRqZoI" onclick="openModal('oUfEBHRqZoI')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/oUfEBHRqZoI/hqdefault.jpg" alt="앤더슨벨" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">앤더슨벨</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="4xHlJuFc7Og" onclick="openModal('4xHlJuFc7Og')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/4xHlJuFc7Og/hqdefault.jpg" alt="볼라솔루션" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">볼라솔루션</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="8qDMMDnrF1g" onclick="openModal('8qDMMDnrF1g')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/8qDMMDnrF1g/hqdefault.jpg" alt="닥스" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">닥스</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="lnuk0A_6nEc" onclick="openModal('lnuk0A_6nEc')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/lnuk0A_6nEc/hqdefault.jpg" alt="진경여행라면" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">진경여행라면</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="brand">
+        <div class="pf-video-wrap" data-vid="Wp9lGpTFQdg" onclick="openModal('Wp9lGpTFQdg')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/Wp9lGpTFQdg/hqdefault.jpg" alt="에스모터스" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Brand</div><div class="pf-name">에스모터스</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="zcTlBK-G5IM" onclick="openModal('zcTlBK-G5IM')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/zcTlBK-G5IM/hqdefault.jpg" alt="NERDY" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">NERDY</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="GRwsm3OP5BU" onclick="openModal('GRwsm3OP5BU')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/GRwsm3OP5BU/hqdefault.jpg" alt="MLB" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">MLB</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="l0KWQKWgcEM" onclick="openModal('l0KWQKWgcEM')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/l0KWQKWgcEM/hqdefault.jpg" alt="널디" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">널디</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="XXSUoy9ItxE" onclick="openModal('XXSUoy9ItxE')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/XXSUoy9ItxE/hqdefault.jpg" alt="로사케이" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">로사케이</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="6jwParmZkz8" onclick="openModal('6jwParmZkz8')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/6jwParmZkz8/hqdefault.jpg" alt="수프라" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">수프라</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="oz1cEJGhMN4" onclick="openModal('oz1cEJGhMN4')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/oz1cEJGhMN4/hqdefault.jpg" alt="로사케이 숏" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">로사케이 숏</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="9zYHfJs2pRk" onclick="openModal('9zYHfJs2pRk')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/9zYHfJs2pRk/hqdefault.jpg" alt="와글" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">와글</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="NLJqJpOg5sc" onclick="openModal('NLJqJpOg5sc')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/NLJqJpOg5sc/hqdefault.jpg" alt="MLB Kids" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">MLB Kids</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="DGLH26PqYLo" onclick="openModal('DGLH26PqYLo')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/DGLH26PqYLo/hqdefault.jpg" alt="MLB" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">MLB</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="rx8NAfS1MLw" onclick="openModal('rx8NAfS1MLw')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/rx8NAfS1MLw/hqdefault.jpg" alt="스트레치앤젤스" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">스트레치앤젤스</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="bI9IhmNfH_o" onclick="openModal('bI9IhmNfH_o')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/bI9IhmNfH_o/hqdefault.jpg" alt="스트레치앤젤스" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">스트레치앤젤스</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="xYl3Xzd3ZGM" onclick="openModal('xYl3Xzd3ZGM')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/xYl3Xzd3ZGM/hqdefault.jpg" alt="MLB" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">MLB</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="fashion">
+        <div class="pf-video-wrap" data-vid="KjkqrwGPPsM" onclick="openModal('KjkqrwGPPsM')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/KjkqrwGPPsM/hqdefault.jpg" alt="MLB" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Fashion</div><div class="pf-name">MLB</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="ePPsNU2b1YA" onclick="openModal('ePPsNU2b1YA')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/ePPsNU2b1YA/hqdefault.jpg" alt="LACOSTE" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">LACOSTE</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="mGVWGK4FWp0" onclick="openModal('mGVWGK4FWp0')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/mGVWGK4FWp0/hqdefault.jpg" alt="KAKAO Dev" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">KAKAO Dev</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="gQf1DdIKuHw" onclick="openModal('gQf1DdIKuHw')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/gQf1DdIKuHw/hqdefault.jpg" alt="빌리포" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">빌리포</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="YxnnbRpX8Tk" onclick="openModal('YxnnbRpX8Tk')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/YxnnbRpX8Tk/hqdefault.jpg" alt="크로스핏 까사" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">크로스핏 까사</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="RkS1MRuA9Wk" onclick="openModal('RkS1MRuA9Wk')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/RkS1MRuA9Wk/hqdefault.jpg" alt="로에베" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">로에베</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="xT4zsZp-DPQ" onclick="openModal('xT4zsZp-DPQ')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/xT4zsZp-DPQ/hqdefault.jpg" alt="로에베" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">로에베</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="twcqet0UXac" onclick="openModal('twcqet0UXac')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/twcqet0UXac/hqdefault.jpg" alt="팀보타" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">팀보타</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="2E0vwk0Q5dI" onclick="openModal('2E0vwk0Q5dI')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/2E0vwk0Q5dI/hqdefault.jpg" alt="호요버스" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">호요버스</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="OAIjN_kUNdY" onclick="openModal('OAIjN_kUNdY')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/OAIjN_kUNdY/hqdefault.jpg" alt="숙명여자대학교" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">숙명여자대학교</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="vHV40K6SwTE" onclick="openModal('vHV40K6SwTE')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/vHV40K6SwTE/hqdefault.jpg" alt="CICFNB" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">CICFNB</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="5BFcLQft0fg" onclick="openModal('5BFcLQft0fg')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/5BFcLQft0fg/hqdefault.jpg" alt="CICFNB" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">CICFNB</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="LvAEBuPX8EQ" onclick="openModal('LvAEBuPX8EQ')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/LvAEBuPX8EQ/hqdefault.jpg" alt="대한상공회의소" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">대한상공회의소</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="0Pf_61x-6cU" onclick="openModal('0Pf_61x-6cU')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/0Pf_61x-6cU/hqdefault.jpg" alt="대한상공회의소" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">대한상공회의소</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="roZtW1U51Mk" onclick="openModal('roZtW1U51Mk')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/roZtW1U51Mk/hqdefault.jpg" alt="VONIN" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">VONIN</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="WiyRTkGpEds" onclick="openModal('WiyRTkGpEds')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/WiyRTkGpEds/hqdefault.jpg" alt="W코리아" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">W코리아</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="AgFz0Om_Vw0" onclick="openModal('AgFz0Om_Vw0')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/AgFz0Om_Vw0/hqdefault.jpg" alt="W코리아" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">W코리아</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="PueevZdXQh0" onclick="openModal('PueevZdXQh0')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/PueevZdXQh0/hqdefault.jpg" alt="Korea Beatbox Championship" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">Korea Beatbox Championship</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="event">
+        <div class="pf-video-wrap" data-vid="lYCUyKqkuqI" onclick="openModal('lYCUyKqkuqI')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/lYCUyKqkuqI/hqdefault.jpg" alt="만두카코리아" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Event</div><div class="pf-name">만두카코리아</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="X6m9hxZcCG8" onclick="openModal('X6m9hxZcCG8')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/X6m9hxZcCG8/hqdefault.jpg" alt="블랙핑크 지수" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">블랙핑크 지수</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="lHHwtV6S6-U" onclick="openModal('lHHwtV6S6-U')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/lHHwtV6S6-U/hqdefault.jpg" alt="디올 쟈도르" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">디올 쟈도르</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="1V-_Qg00DNI" onclick="openModal('1V-_Qg00DNI')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/1V-_Qg00DNI/hqdefault.jpg" alt="한우 오마카세 우이시" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">한우 오마카세 우이시</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="4VFc4yG2GmI" onclick="openModal('4VFc4yG2GmI')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/4VFc4yG2GmI/hqdefault.jpg" alt="한스킨 홀리뱅" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">한스킨 홀리뱅</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="QEPGzLlevGk" onclick="openModal('QEPGzLlevGk')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/QEPGzLlevGk/hqdefault.jpg" alt="페탁 FETAQ" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">페탁 FETAQ</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="jGWdxzkQDX4" onclick="openModal('jGWdxzkQDX4')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/jGWdxzkQDX4/hqdefault.jpg" alt="프리지본 FREEZYBONE" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">프리지본 FREEZYBONE</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="PZcicL4c4QU" onclick="openModal('PZcicL4c4QU')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/PZcicL4c4QU/hqdefault.jpg" alt="포텐셜 POTENTIAL" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">포텐셜 POTENTIAL</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="4hMW3gI6gAI" onclick="openModal('4hMW3gI6gAI')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/4hMW3gI6gAI/hqdefault.jpg" alt="크록스 이승훈" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">크록스 이승훈</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="MOagssIgNR8" onclick="openModal('MOagssIgNR8')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/MOagssIgNR8/hqdefault.jpg" alt="헤지스 HAZZYS" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">헤지스 HAZZYS</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="6MbZFEyzZVI" onclick="openModal('6MbZFEyzZVI')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/6MbZFEyzZVI/hqdefault.jpg" alt="케이스스터디" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">케이스스터디</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="eozm2aQyRsw" onclick="openModal('eozm2aQyRsw')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/eozm2aQyRsw/hqdefault.jpg" alt="W코리아" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">W코리아</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="short">
+        <div class="pf-video-wrap" data-vid="kpQFBUpsyDg" onclick="openModal('kpQFBUpsyDg')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/kpQFBUpsyDg/hqdefault.jpg" alt="헤지스 HAZZYS" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">Short</div><div class="pf-name">헤지스 HAZZYS</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="vHQVtsQ1JSg" onclick="openModal('vHQVtsQ1JSg')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/vHQVtsQ1JSg/hqdefault.jpg" alt="MC스나이퍼 — 무소식" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">MC스나이퍼 — 무소식</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="lMhFNS0OVew" onclick="openModal('lMhFNS0OVew')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/lMhFNS0OVew/hqdefault.jpg" alt="MC스나이퍼 — 할 수 있어" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">MC스나이퍼 — 할 수 있어</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="CAkAKVAG-mc" onclick="openModal('CAkAKVAG-mc')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/CAkAKVAG-mc/hqdefault.jpg" alt="MC스나이퍼 — 야간비행" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">MC스나이퍼 — 야간비행</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="apieYU8IUOc" onclick="openModal('apieYU8IUOc')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/apieYU8IUOc/hqdefault.jpg" alt="Farmers — 거울에 비친 내 모습 좀 봐" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">Farmers — 거울에 비친 내 모습 좀 봐</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="VHgsEBD0LmQ" onclick="openModal('VHgsEBD0LmQ')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/VHgsEBD0LmQ/hqdefault.jpg" alt="공민지 — Teamo" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">공민지 — Teamo</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="vn2TN1dx5PY" onclick="openModal('vn2TN1dx5PY')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/vn2TN1dx5PY/hqdefault.jpg" alt="타린 — MOVIE WINTER" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">타린 — MOVIE WINTER</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="whTjHvpCgmg" onclick="openModal('whTjHvpCgmg')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/whTjHvpCgmg/hqdefault.jpg" alt="투탁핀셔 — 돈으로 사랑을 살 수 있어" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">투탁핀셔 — 돈으로 사랑을 살 수 있어</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="EC4QmvFy_kA" onclick="openModal('EC4QmvFy_kA')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/EC4QmvFy_kA/hqdefault.jpg" alt="베리코이버니 — Bad Connection" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">베리코이버니 — Bad Connection</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="3GdtMM3Pws8" onclick="openModal('3GdtMM3Pws8')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/3GdtMM3Pws8/hqdefault.jpg" alt="베리코이버니 — Go For It" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">베리코이버니 — Go For It</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="-r67Fo3_eR8" onclick="openModal('-r67Fo3_eR8')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/-r67Fo3_eR8/hqdefault.jpg" alt="부기 — Show Time" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">부기 — Show Time</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="Tdbe7HXQrhk" onclick="openModal('Tdbe7HXQrhk')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/Tdbe7HXQrhk/hqdefault.jpg" alt="더 드리머스 — 나는 노랠 부르고" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">더 드리머스 — 나는 노랠 부르고</div></div>
+        <div class="pf-border"></div>
+      </div>
+      <div class="pf-card" data-cat="mv">
+        <div class="pf-video-wrap" data-vid="CTXVqRyC94g" onclick="openModal('CTXVqRyC94g')">
+          <img class="yt-thumb" src="https://img.youtube.com/vi/CTXVqRyC94g/hqdefault.jpg" alt="하인애 — When You Sleep" loading="lazy">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+        </div>
+        <div class="pf-overlay"><div class="pf-cat">M/V</div><div class="pf-name">하인애 — When You Sleep</div></div>
+        <div class="pf-border"></div>
+      </div>
+    </div>
+    <div class="yt-cta">
+    <a href="https://youtube.com/@rushstudio2019" target="_blank" class="yt-btn">
+      <svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.2 3.5-6.2 3.5z"/></svg>
+      유튜브 채널에서 더 보기
+    </a>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="insta-section">
+  <div class="section-tag">Instagram</div>
+  <h2 class="section-title reveal">@rushstudio.kr</h2>
+  <div class="insta-grid reveal reveal-delay-1">
+    <!--
+      ★ 인스타그램 연동 방법:
+      1. behold.so 에 가입
+      2. 인스타그램 계정(@rushstudio.kr) 연결
+      3. 발급된 위젯 코드를 아래 placeholder 대신 붙여넣기
+    -->
+    <a href="https://instagram.com/rushstudio.kr" target="_blank" class="insta-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+      <span>Instagram 피드</span>
+    </a>
+    <a href="https://instagram.com/rushstudio.kr" target="_blank" class="insta-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+      <span>Instagram 피드</span>
+    </a>
+    <a href="https://instagram.com/rushstudio.kr" target="_blank" class="insta-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+      <span>Instagram 피드</span>
+    </a>
+    <a href="https://instagram.com/rushstudio.kr" target="_blank" class="insta-placeholder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+      <span>Instagram 피드</span>
+    </a>
+  </div>
+  <div class="insta-cta reveal">
+    <a href="https://instagram.com/rushstudio.kr" target="_blank" class="insta-follow">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+      인스타그램 팔로우
+    </a>
+    <span class="insta-handle">@rushstudio.kr</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <div class="section-tag">Contact</div>
+  <div class="contact-big reveal">LET'S<br>MAKE <span class="accent">FILM</span></div>
+  <div class="contact-layout">
+    <!-- FORM -->
+    <div>
+      <!--
+        ★ Formspree 연동:
+        action의 xjgjgybe 는 발급받은 폼 ID입니다.
+        Formspree 대시보드에서 이메일 인증만 완료하면 바로 수신됩니다.
+      -->
+      <form class="contact-form" id="contactForm"
+            action="https://formspree.io/f/xjgjgybe"
+            method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">이름 / 회사명 *</label>
+            <input type="text" id="name" name="name" placeholder="홍길동 / 러쉬스튜디오" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">연락처 *</label>
+            <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">이메일 *</label>
+          <input type="email" id="email" name="email" placeholder="example@company.com" required>
+        </div>
+        <div class="form-group">
+          <label for="service">문의 유형</label>
+          <select id="service" name="service">
+            <option value="">선택해주세요</option>
+            <option>브랜드 필름</option>
+            <option>광고 영상</option>
+            <option>패션 필름</option>
+            <option>행사 스케치</option>
+            <option>숏폼 콘텐츠</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="budget">예산 규모</label>
+          <select id="budget" name="budget">
+            <option value="">선택해주세요</option>
+            <option>500만원 미만</option>
+            <option>500만 ~ 1,000만원</option>
+            <option>1,000만 ~ 3,000만원</option>
+            <option>3,000만원 이상</option>
+            <option>협의 후 결정</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">문의 내용 *</label>
+          <textarea id="message" name="message" placeholder="프로젝트에 대해 자유롭게 적어주세요." required></textarea>
+        </div>
+        <!-- Formspree 스팸 방지 -->
+        <input type="text" name="_gotcha" style="display:none">
+        <input type="hidden" name="_subject" value="[러쉬스튜디오] 새 프로젝트 문의">
+        <button type="submit" class="form-submit" id="submitBtn">
+          문의 보내기
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p class="form-notice">* 표시 항목은 필수입니다. 보통 1-2 영업일 이내 답변드립니다.</p>
+      </form>
+      <div class="form-success" id="formSuccess">
+        문의가 성공적으로 전송되었습니다.<br>빠른 시일 내에 연락드리겠습니다. 감사합니다.
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="contact-info-col reveal reveal-delay-2">
+      <div>
+        <div class="contact-item-label">Director</div>
+        <div class="contact-item-val">이정환 감독</div>
+      </div>
+      <div class="contact-divider"></div>
+      <div>
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-val"><a href="mailto:rush@rushstudio.kr">rush@rushstudio.kr</a></div>
+      </div>
+      <div>
+        <div class="contact-item-label">Phone</div>
+        <div class="contact-item-val"><a href="tel:01066861015">010-6686-1015</a></div>
+      </div>
+      <div class="contact-divider"></div>
+      <div>
+        <div class="contact-item-label">카카오톡 채널</div>
+        <div class="contact-item-val" style="margin-bottom:16px">빠른 상담은 카카오톡으로 문의해주세요.</div>
+        <a href="http://pf.kakao.com/_bxmzCX" target="_blank" class="kakao-btn">
+          <svg viewBox="0 0 24 24" fill="var(--kakao-text)"><path d="M12 3C6.48 3 2 6.69 2 11.25c0 2.91 1.77 5.47 4.45 6.99L5.5 21l3.6-1.94c.94.26 1.93.4 2.9.4 5.52 0 10-3.69 10-8.21S17.52 3 12 3z"/></svg>
+          카카오톡으로 문의하기
+        </a>
+      </div>
+      <div>
+        <div class="contact-item-label">YouTube</div>
+        <div class="contact-item-val">
+          <a href="https://youtube.com/@rushstudio2019" target="_blank">@RUSHSTUDIO2019 ↗</a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-item-label">Instagram</div>
+        <div class="contact-item-val">
+          <a href="https://instagram.com/rushstudio.kr" target="_blank">@rushstudio.kr ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="f-logo">RUSH STUDIO</div>
+    <div class="f-tagline">당신의 브랜드를 영상으로 설득합니다</div>
+  </div>
+  <div>
+    <div class="f-links">
+      <a href="#about">About</a>
+      <a href="#promise">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+      <a href="https://instagram.com/rushstudio.kr" target="_blank">Instagram</a>
+      <a href="https://youtube.com/@rushstudio2019" target="_blank">YouTube</a>
+    </div>
+    <div class="f-copy">© 2026 Rush Studio. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+(function tick() {
+  cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+  rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(tick);
+})();
+
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Mobile menu
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => mob.classList.toggle('open'));
+function closeMobile() { mob.classList.remove('open'); }
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Portfolio filter
+function filterPF(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pf-card').forEach(card => {
+    const show = cat==='all' || card.dataset.cat===cat;
+    card.style.display = show ? 'block' : 'none';
+  });
+}
+
+// Video modal
+function openModal(vid) {
+  const shorts = ["9zYHfJs2pRk", "MOagssIgNR8", "QEPGzLlevGk", "eozm2aQyRsw", "PZcicL4c4QU", "6MbZFEyzZVI", "1V-_Qg00DNI", "4VFc4yG2GmI", "kpQFBUpsyDg", "jGWdxzkQDX4", "lHHwtV6S6-U", "oz1cEJGhMN4", "4hMW3gI6gAI"];
+  const src = shorts.includes(vid)
+    ? `https://www.youtube.com/embed/${vid}?autoplay=1&rel=0`
+    : `https://www.youtube.com/embed/${vid}?autoplay=1&rel=0`;
+  document.getElementById('modalIframe').src = src;
+  document.getElementById('videoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('videoModal')) return;
+  document.getElementById('modalIframe').src = '';
+  document.getElementById('videoModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(null); });
+
+// Formspree AJAX submit
+const form = document.getElementById('contactForm');
+const successBox = document.getElementById('formSuccess');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  submitBtn.textContent = '전송 중...';
+  submitBtn.disabled = true;
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      successBox.classList.add('show');
+    } else {
+      alert('전송 중 오류가 발생했습니다. 카카오톡 또는 이메일로 문의해주세요.');
+      submitBtn.textContent = '문의 보내기';
+      submitBtn.disabled = false;
+    }
+  } catch {
+    alert('네트워크 오류입니다. 카카오톡 또는 이메일로 문의해주세요.');
+    submitBtn.textContent = '문의 보내기';
+    submitBtn.disabled = false;
+  }
+});
+</script>
+
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="videoModal" onclick="closeModal(event)">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeModal(null)">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      닫기
+    </button>
+    <iframe id="modalIframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+  </div>
+</div>
+</body>
+</html>
